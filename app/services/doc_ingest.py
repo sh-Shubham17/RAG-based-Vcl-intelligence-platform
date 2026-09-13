@@ -20,3 +20,15 @@ def extract_text(path: Path) -> str:
     if ext in (".txt", ".md"):
         return path.read_text(encoding="utf-8", errors="ignore")
     raise ValueError(f"Unsupported file type: {ext}")
+
+def ingest_file(path: Path) -> dict:
+    text = extract_text(path)
+    chunks = chunk_text( text, settings.chunk_size, settings.chuk_overlap)
+    if not chunks:
+        raise ValueError("no extractable text foud in the document.")
+    embeddings = get_llm().embed_many(chunks, task_type="RETRIEVAL_DOCUMENT")
+    source = path.name
+    ids = [f"{source}::{i}" for i in range(len(chunks))]
+    metadatas = [{"source":source, "chunk":i} for i in range(len(chunks))]
+    get_store().add(ids, embeddings, chunks, metadatas)
+    return {"source": source, "chunks" : len(chunks)}
