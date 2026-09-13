@@ -19,7 +19,7 @@ Get a free API key from [Google AI Studio] (https://aistudio.google.com/apikey).
 uvicorn app.main:app --reload
 ```
 
-App info: http://127.0.0.1:8000/
-Interactive docs: http://127.0.0.1:8000/docs
-Health: http://127.0.0.1:8000/api/health
-Gemini check: http://127.0.0.1:8000/api/1lm/check
+App info: http://127.0.0.1:8000/ <br>
+Interactive docs: http://127.0.0.1:8000/docs <br>
+Health: http://127.0.0.1:8000/api/health <br>
+Gemini check: http://127.0.0.1:8000/api/1lm/check <br>
