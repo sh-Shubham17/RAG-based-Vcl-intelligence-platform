@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api import health, llm
+from app.api import chat, documents, health, llm
 from app.config import settings
 
 
@@ -7,6 +7,8 @@ app = FastAPI(title=settings.app_name, version="0.1.0")
 
 app.include_router(health.router, prefix="/api")
 app.include_router(llm.router, prefix="/api")
+app.include_router(documents.router, prefix="/api")
+app.include_router(chat.router, prefix="/api")
 
 @app.get("/")
 def root() -> dict:

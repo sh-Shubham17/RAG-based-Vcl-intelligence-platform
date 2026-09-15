@@ -6,6 +6,11 @@ class Settings(BaseSettings):
     gemini_api_key: str=""
     gemini_chat_model: str="gemini-3.6-flash"
     gemini_embed_model: str="text-embedding-004"
+    data_dir: str = "data"
+    chunk_size: int = 1000
+    chunk_overlap: int = 150
+    retrieval_top_k: int = 4
+    max_upload_mb: int = 10
 
 
 settings = Settings()
