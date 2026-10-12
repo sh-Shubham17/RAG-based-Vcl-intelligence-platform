@@ -16,11 +16,21 @@ class GeminiClient:
         )
         return response.text
 
-    def embed(self, text: str) -> list[float]:
-        result = self._client.models.embed_content(
-            model=settings.gemini_embed_model, contents=text
+    def embed(self, text: str, task_type:str | None = None) -> list[float]:
+        return self._embed([text], task_type)[0]
+
+    def embed_many(self, texts: list[str], task_type:str | None = None) -> list[list[float]]:
+        return self._embed(texts, task_type)
+
+
+    def _embed(self, texts: list[str], task_type: str |None) -> list[list[float]]:
+        config = (
+            types.EmbedContentConfig(task_type = task_type) if task_type else None
         )
-        return result.embeddings[0].values
+        result = self._client.models.embed_content(
+            model=settings.gemini_embed_model, contents=texts, config = config
+        )
+        return [embedding.values for embedding in result.embeddings]
 
     def ping(self) -> str:
         return self.chat("reply with the single word: ping").strip()

@@ -16,7 +16,7 @@ def list_documents() -> DocumentList:
 
 @router.post("", response_model = UploadResponse)
 def upload(file: UploadFile = File(...)) -> UploadResponse:
-    dest = validate_and_save( file, Path(settings.data_dir)/"uploads", settings.max* 1024 * 1024)
+    dest = validate_and_save( file, Path(settings.data_dir)/"uploads", settings.max_upload_mb* 1024 * 1024)
     try:
         result = ingest_file(dest)
     except ValueError as exc:

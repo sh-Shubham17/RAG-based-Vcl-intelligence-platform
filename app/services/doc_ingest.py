@@ -23,7 +23,7 @@ def extract_text(path: Path) -> str:
 
 def ingest_file(path: Path) -> dict:
     text = extract_text(path)
-    chunks = chunk_text( text, settings.chunk_size, settings.chuk_overlap)
+    chunks = chunk_text( text, settings.chunk_size, settings.chunk_overlap)
     if not chunks:
         raise ValueError("no extractable text foud in the document.")
     embeddings = get_llm().embed_many(chunks, task_type="RETRIEVAL_DOCUMENT")
